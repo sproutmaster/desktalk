@@ -12,16 +12,12 @@ socket.on('update_users', function (data) {
     $('#wait_time').text('unknown');
 });
 
-socket.on('ticket_taken', function (data) {
-    if(data['token'] === token) {
-        alert(data['taken_by'] + ' has taken your ticket. Please join the call');
-        update_tickets();
-    }
-});
+socket.on('ticket_update', function (data) {
+    if(data['action'] === 'new')
+        return;
 
-socket.on('ticket_closed', function (data) {
-    if(data['token'] === token) {
-        alert(data['taken_by'] + 'has closed your ticket');
+    if(data['owner'] === token) {
+        alert(data['updated_by_name'] + ' has set your ticket status to ' + data['status']);
         update_tickets();
     }
 });

@@ -21,13 +21,16 @@ socket.on('update_users', function (data) {
 });
 
 socket.on('ticket_update', function (data) {
-    if (data['updated_by'] !== token) {
-        if (data['type'] === 'new')
-            alert("New ticket from " + data['owner_name']);
-        else if (data['type'] === 'update')
-            alert("You have a new ticket update");
-        update_tickets();
-    }
+
+    if(data['type'] === 'new')
+        alert("New ticket from " + data['owner_name']);
+
+    if (data['updated_by'] === token)
+        return;
+
+    alert("A ticket was updated");
+    update_tickets();
+
 });
 
 window.onbeforeunload = function () {
