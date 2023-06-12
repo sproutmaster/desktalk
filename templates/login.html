@@ -1,0 +1,82 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="x-ua-compatible" content="ie=edge"/>
+
+    <title>Login | Desktalk</title>
+    <script type="text/javascript" src="{{ url_for('static', filename='bootstrap/mdb.min.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"
+            integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg=="
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/mdb.min.css') }}"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap"/>
+
+    <style>
+        #intro {
+            background-image: url(https://mdbootstrap.com/img/new/fluid/city/008.jpg);
+            height: 100vh;
+        }
+    </style>
+</head>
+
+<body>
+<main>
+    <!-- Background image -->
+    <div id="intro" class="bg-image shadow-2-strong">
+        <div class="mask d-flex align-items-center h-100" style="background-color: rgba(0, 0, 0, 0.8);">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-xl-5 col-md-8">
+                        <div class="bg-white rounded-5 shadow-5-strong p-5">
+                            <h2 class="text-center">Login</h2><br>
+                            <!-- Email input -->
+                            <div class="form-outline mb-4">
+                                <input type="text" id="user" class="form-control"/>
+                                <label class="form-label" for="user">Username</label>
+                            </div>
+                            <!-- Password input -->
+                            <div class="form-outline mb-4">
+                                <input type="password" id="password" class="form-control"/>
+                                <label class="form-label" for="password">Password</label>
+                            </div>
+                            <!-- Submit button -->
+                            <button onclick="login()" class="btn btn-primary btn-block">Login</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col text-center"><a href="/signup" alt="signup">Signup?</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Background image -->
+</main>
+<!--Main Navigation-->
+<script>
+    function login() {
+        let user = $('#user').val();
+        let password = $('#password').val();
+        if (user === '' || password === '')
+            return alert('Please fill all the fields');
+        $.ajax({
+            url: '/login',
+            type: 'POST',
+            data: {
+                user: user,
+                password: password
+            },
+            success: function (result) {
+                if (result.status === 'success') {
+                    window.localStorage.setItem('token', result.token);
+                    window.location.href = '/';
+                } else {
+                    alert('Invalid credentials. Try again');
+                }
+            }
+        });
+    }
+</script>
+</body>
+</html>

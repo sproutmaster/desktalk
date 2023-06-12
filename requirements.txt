@@ -1,0 +1,4 @@
+flask
+flask_socketio
+pymongo
+requests==2.31.0
