@@ -2,3 +2,5 @@ flask
 flask_socketio
 pymongo
 requests==2.31.0
+python-dotenv
+python-socketio==5.7.2
